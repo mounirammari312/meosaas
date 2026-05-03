@@ -7,21 +7,16 @@ from src.engine.traffic_orchestrator import TrafficOrchestrator
 import os
 import shutil
 
-app = FastAPI(title="MEO Control Center", version="1.2.0")
+app = FastAPI(title="MEO Control Center", version="1.3.0")
 
-# إعداد المسارات المطلقة لخدمة الواجهة
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# تهيئة نظام القوالب
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "src/templates"))
 
 @app.get("/", response_class=HTMLResponse)
 async def dashboard(request: Request):
-    """
-    تقديم واجهة التحكم الرئيسية.
-    """
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/process-geo")
@@ -30,43 +25,28 @@ async def process_image_geo(
     lon: float = Form(...), 
     image: UploadFile = File(...)
 ):
-    """
-    استقبال الصورة والبيانات الجغرافية ومعالجتها فوراً.
-    """
     file_path = os.path.join(UPLOAD_DIR, image.filename)
-    
-    # حفظ الملف مؤقتاً للمعالجة
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(image.file, buffer)
     
     try:
         injector = MetadataInjector(file_path)
-        injector.inject_geo_authority(
-            lat=lat,
-            lon=lon,
-            keywords=["Premium Service", "Local Authority", "Expert Repair"],
-            description="MEO Optimized Asset v1.2"
-        )
-        return {
-            "status": "success", 
-            "message": "Image geo-tagged successfully",
-            "integrity": injector.verify_integrity()
-        }
+        injector.inject_geo_authority(lat=lat, lon=lon, keywords=["MEO", "Local"], description="Verified Asset")
+        return {"status": "success", "integrity": injector.verify_integrity()}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/trigger-traffic")
-async def trigger_ghost_traffic(background_tasks: BackgroundTasks, cid: str, intensity: int = 5):
-    """
-    تفعيل محاكي التفاعل الجغرافي في الخلفية.
-    """
+async def trigger_ghost_traffic(
+    background_tasks: BackgroundTasks, 
+    cid: str = Form(...), 
+    intensity: int = Form(...),
+    gateway_url: str = Form(None) # استقبال رابط البروكسي من الهاتف
+):
     try:
-        orchestrator = TrafficOrchestrator(target_cid=cid)
+        # استخدام رابط الهاتف كبوابة خروج للبيانات
+        orchestrator = TrafficOrchestrator(target_cid=cid, gateway_url=gateway_url)
         background_tasks.add_task(orchestrator.mass_orchestration, intensity=intensity)
-        return {
-            "status": "initiated",
-            "target": cid,
-            "intensity": intensity
-        }
+        return {"status": "initiated", "gateway": gateway_url if gateway_url else "Direct"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
