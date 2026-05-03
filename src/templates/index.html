@@ -3,86 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEO Control Center | مركز التحكم</title>
+    <title>MEO Dominator Dashboard v1.3</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        input:focus, select:focus { outline: none; border-color: #3b82f6; ring: 2px #3b82f6; }
     </style>
 </head>
 <body class="p-4 md:p-8">
 
-    <header class="mb-8">
-        <h1 class="text-2xl font-bold text-blue-400">MEO Dominator <span class="text-sm font-normal text-slate-400">v1.2.0</span></h1>
-        <p class="text-slate-400 mt-1">نظام أتمتة الإشارات الجغرافية والتفاعل المحلي</p>
+    <header class="mb-8 text-center md:text-right">
+        <h1 class="text-2xl font-bold text-blue-400">MEO Dominator <span class="text-sm font-normal text-slate-400">v1.3.0 (Sovereign Edition)</span></h1>
+        <p class="text-slate-400 mt-1">نظام أتمتة الإشارات الجغرافية عبر البوابة المحمولة</p>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <!-- Module 1: Geo-Tagging -->
-        <section class="glass p-6 rounded-2xl shadow-xl">
-            <h2 class="text-xl font-semibold mb-4 flex items-center">
-                <span class="bg-blue-500 w-2 h-6 rounded mr-2 ml-2"></span>
-                حقن البيانات الجغرافية (Geo-Tagging)
+        <!-- Module 1: Geo-Tagging Engine -->
+        <section class="glass p-6 rounded-2xl shadow-2xl border border-blue-500/20">
+            <h2 class="text-xl font-semibold mb-6 flex items-center">
+                <span class="bg-blue-500 w-2 h-6 rounded ml-3"></span>
+                حقن البيانات الجغرافية (Image SEO)
             </h2>
-            <form action="/process-geo" method="post" enctype="multipart/form-data" class="space-y-4">
+            <form action="/process-geo" method="post" enctype="multipart/form-data" class="space-y-5">
                 <div>
-                    <label class="block text-sm text-slate-400 mb-1">الصورة المستهدفة</label>
-                    <input type="file" name="image" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm">
+                    <label class="block text-sm text-slate-400 mb-2">صورة المنتج/المحل</label>
+                    <input type="file" name="image" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:bg-blue-600 file:text-white hover:file:bg-blue-500">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm text-slate-400 mb-1">خط العرض (Lat)</label>
-                        <input type="number" step="any" name="lat" placeholder="36.75" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm">
+                        <input type="number" step="any" name="lat" value="34.859077" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-mono text-blue-300 text-left">
                     </div>
                     <div>
                         <label class="block text-sm text-slate-400 mb-1">خط الطول (Lon)</label>
-                        <input type="number" step="any" name="lon" placeholder="3.05" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm">
+                        <input type="number" step="any" name="lon" value="5.7451556" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-mono text-blue-300 text-left">
                     </div>
                 </div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 transition p-3 rounded-lg font-bold">
-                    تنفيذ الحقن التقني
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 transition-all duration-300 p-4 rounded-xl font-bold shadow-lg shadow-blue-900/20">
+                    تحديث هوية الصورة جغرافياً
                 </button>
             </form>
         </section>
 
-        <!-- Module 2: Traffic Simulation -->
-        <section class="glass p-6 rounded-2xl shadow-xl">
-            <h2 class="text-xl font-semibold mb-4 flex items-center">
-                <span class="bg-purple-500 w-2 h-6 rounded mr-2 ml-2"></span>
+        <!-- Module 2: Ghost Traffic Engine -->
+        <section class="glass p-6 rounded-2xl shadow-2xl border border-purple-500/20">
+            <h2 class="text-xl font-semibold mb-6 flex items-center">
+                <span class="bg-purple-500 w-2 h-6 rounded ml-3"></span>
                 محاكاة التفاعل (Ghost Traffic)
             </h2>
-            <form action="/trigger-traffic" method="post" class="space-y-4">
+            <form action="/trigger-traffic" method="post" class="space-y-5">
                 <div>
                     <label class="block text-sm text-slate-400 mb-1">معرف النشاط (CID)</label>
-                    <input type="text" name="cid" placeholder="أدخل رقم CID الخاص بجوجل" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm text-left font-mono">
+                    <input type="text" name="cid" value="3484433108603673707" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm font-mono text-purple-300 text-left">
                 </div>
+                
+                <div>
+                    <label class="block text-sm text-purple-400 font-bold mb-1 italic">رابط البوابة (Gateway URL)</label>
+                    <input type="url" name="gateway_url" placeholder="https://...trycloudflare.com" required class="w-full bg-slate-900 border border-purple-500/50 rounded-xl p-3 text-sm font-mono text-white text-left placeholder:text-slate-600">
+                    <p class="text-[10px] text-slate-500 mt-2">انسخ الرابط الظاهر في Termux (Cloudflare Tunnel) هنا.</p>
+                </div>
+
                 <div>
                     <label class="block text-sm text-slate-400 mb-1">كثافة التفاعل (Intensity)</label>
-                    <select name="intensity" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-sm">
-                        <option value="5">منخفضة (5 زيارات)</option>
-                        <option value="15">متوسطة (15 زيارة)</option>
-                        <option value="50">عالية (50 زيارة - تتطلب بروكسي)</option>
+                    <select name="intensity" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm appearance-none">
+                        <option value="5">نمط آمن (5 زيارات)</option>
+                        <option value="15">نمط مكثف (15 زيارة)</option>
                     </select>
                 </div>
-                <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 transition p-3 rounded-lg font-bold">
-                    إطلاق ترافيك الأشباح
+                
+                <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 transition-all duration-300 p-4 rounded-xl font-bold shadow-lg shadow-purple-900/20">
+                    إطلاق ترافيك الأشباح عبر الهاتف
                 </button>
             </form>
         </section>
 
     </div>
 
-    <!-- System Status Bar -->
-    <footer class="mt-12 text-center text-slate-500 text-sm">
-        <div class="flex justify-center items-center gap-4">
-            <span class="flex items-center gap-1">
+    <!-- Status Bar -->
+    <footer class="mt-12 text-center text-slate-500 text-xs">
+        <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+            <span class="flex items-center gap-2">
                 <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                خادم Render متصل
+                خادم Render: مستقر
             </span>
-            <span class="border-r border-slate-700 h-4"></span>
-            <span>Architecture: Senior-Decoupled v1.2</span>
+            <span class="hidden md:inline border-r border-slate-700 h-4"></span>
+            <span>Architecture: Senior-Architect v1.3 (Integrated)</span>
         </div>
     </footer>
 
